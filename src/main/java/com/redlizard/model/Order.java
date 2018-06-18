@@ -1,50 +1,33 @@
 package com.redlizard.model;
 
+
+import com.redlizard.utils.enums.OrderStatus;
+import com.redlizard.utils.enums.PaymentMode;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 public class Order {
-    private int id;
 
-    private int userId; //for delivery boy
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
     private Double amount;
-    private String modeOfPayment;
-    private String orderStatus;
 
-    public int getId() {
-        return id;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_mode", length = 10)
+    private PaymentMode paymentMode;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status", length = 10)
+    private OrderStatus orderStatus;
 
-    public int getUserId() {
-        return userId;
-    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public String getModeOfPayment() {
-        return modeOfPayment;
-    }
-
-    public void setModeOfPayment(String modeOfPayment) {
-        this.modeOfPayment = modeOfPayment;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "order")
+    private OrderDetails orderDetails;
 }
