@@ -21,13 +21,11 @@ public class Company {
     @Size(max = 15)
     private Long phone;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "company")
-    private Product product;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "company")
+    private Menu menu;
 
 }

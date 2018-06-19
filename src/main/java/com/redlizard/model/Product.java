@@ -1,5 +1,10 @@
 package com.redlizard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.redlizard.utils.enums.Day;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,10 +26,16 @@ public class Product {
     @NotNull
     private Double price;
 
+    @Enumerated(EnumType.STRING)
+    private Day day;
+
     @NotNull
     private boolean isAvailable;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "menu_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Menu menu;
+
 }
