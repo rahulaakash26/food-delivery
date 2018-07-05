@@ -23,8 +23,4 @@ public class Menu {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Product product;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
 }
